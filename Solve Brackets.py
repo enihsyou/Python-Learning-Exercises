@@ -13,7 +13,7 @@ def checkio(expression):
                 return False
 
     return True if not stack else False
-ord()
+
 
 checkio("(((1+(1+1))))]")
 # checkio("(((([[[{{{3}}}]]]]))))")
