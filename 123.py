@@ -1,2 +1,1 @@
-#print(3**2000)
-
+print('{:^30}'.format('centered'))
