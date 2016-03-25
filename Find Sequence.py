@@ -1,38 +1,66 @@
-import random
+def horizontally(data):
+    for i in range(len(data)):
+        yield data[i]
 
 
-def get_data():
-    """Return 3 random integers between 0 and 9"""
-    return random.sample(range(10), 3)
+def vertically(data):
+    data = list(zip(*data))
+    for i in range(len(data)):
+        yield list(data[i])
 
 
-def consume():
-    """Displays a running average across lists of integers sent to it"""
-    running_sum = 0
-    data_items_seen = 0
-
-    while True:
-        data = yield
-        data_items_seen += len(data)
-        running_sum += sum(data)
-        print('The running average is {}'.format(running_sum / float(data_items_seen)))
-
-
-def produce(consumer):
-    """Produces a set of values and forwards them to the pre-defined consumer
-    function"""
-    while True:
-        data = get_data()
-        print('Produced {}'.format(data))
-        consumer.send(data)
-        yield
+def main_diagonally(data):
+    for j in range(len(data)):
+        lst = []
+        for i in range(len(data) - j):
+            lst.append(data[j + i][i])
+        yield lst
+    for j in range(1, len(data)):
+        lst = []
+        for i in range(len(data) - j):
+            lst.append(data[i][i + j])
+        yield lst
 
 
-if __name__ == '__main__':
-    consumer = consume()
-    consumer.send(None)
-    producer = produce(consumer)
+def sub_diagonally(data):
+    for j in range(len(data)):
+        lst = []
+        for i in range(j + 1):
+            lst.append(data[i][j - i])
+        yield lst
+    for j in range(1, len(data)):
+        lst = []
+        for i in range(len(data) - j):
+            lst.append(data[j + i][len(data) - i - 1])
+        yield lst
 
-    for _ in range(10):
-        print('Producing...')
-        next(producer)
+
+# 0,0
+# 0,1 1,0
+# 0,2 1,1 2,0
+
+# 1,6 2,5 3,4 4,3 5,2
+
+def check(data):
+    for item in data:
+        if len(item) >= 4:
+            for i in range(len(item) - 4 + 1):
+                if len(set(item[i:i + 4])) == 1:
+                    return True
+    return False
+
+
+def checkio(data):
+    hor = list(horizontally(data))
+    ver = list(vertically(data))
+    sub = list(sub_diagonally(data))
+    main = list(main_diagonally(data))
+    return check(hor) or check(ver) or check(sub) or check(main)
+
+
+print(checkio([
+    [1, 2, 1, 1],
+    [1, 1, 4, 1],
+    [1, 3, 1, 6],
+    [1, 7, 2, 5]
+]))
