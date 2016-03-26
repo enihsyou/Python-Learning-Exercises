@@ -1,5 +1,11 @@
 import math
+# from re import sub as s
 
+
+# def checkio(data, frmt = '(x{:+.3g})^2+(y{:+.3g})^2={:.3g}^2'):
+#     (p, q, r) = eval(s(r'\((\d+),(\d+)\)', r'\1+\2j', data))
+#     c = (lambda w: (-1j) * (p - q) * (w - abs(w) ** 2) / (2 * w.imag) - p)((r - p) / (q - p))
+#     return frmt.format(c.real, c.imag, round(abs(c + p), 2))
 
 def checkio(input):
     data = [int(a) for a in input if a.isdecimal()]
