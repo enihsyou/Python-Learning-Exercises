@@ -1,3 +1,7 @@
+# former thinking
+
+
+# ways to get prime list in range(10)
 # def prime():
 #     for num in range(10):
 #         if num > 1:
@@ -8,6 +12,7 @@
 #                 yield num
 #
 #
+# factor giving data
 # def factor(data):
 #     return [i for i in range(1, data + 1) if data % i == 0]
 #
@@ -38,6 +43,8 @@
 #             for j in range(len(fact[0])):
 #                 lst.append(input_factor_number_dict[fact[i][j]])
 #             print(lst)
+
+# my answer:
 def checkio(data):
     number = data
     fact = []
