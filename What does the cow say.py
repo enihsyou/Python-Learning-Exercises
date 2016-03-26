@@ -2,6 +2,9 @@ def cowsay(says):
     # Multiple spaces in a row are replaced by one space.
     say = says.split()
 
+    if says[0] == ' ': say[0] = ' ' + say[0]
+    if says[-1] == ' ': say[-1] = say[-1] + ' '
+
     line = []
     con_line_sum = 0  # 当前行的字数
     con_line = []  # 当前行的字符
@@ -20,12 +23,15 @@ def cowsay(says):
 
         else:  # 超过39 不要最后一个
             con_pop = con_line.pop()
-            if len(con_pop) <= 39:
+            if con_pop[0] == ' ':
+                line.append(' ')
+                say.insert(0, con_pop[1:])
+            elif len(con_pop) <= 39:
                 say.insert(0, con_pop)
                 line.append(" ".join(con_line))
             else:
                 line.append(con_pop[:39])
-                say.append(con_pop[39:])
+                say.insert(0, con_pop[39:])
             con_line_sum = 0
             con_line = []
     if con_line:
@@ -63,12 +69,66 @@ def cowsay(says):
                 ||----w |
                 ||     ||
 '''.format(said = said, top = top, bottom = bottom))
+    return r'''
+ {top}
+{said}
+ {bottom}
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+'''.format(said = said, top = top, bottom = bottom)
 
 
-cowsay("looooooooooooooooooooooooooooooooooooooooooooooong")
-cowsay("loooooooooooooooooooooooooooooooooooong")
-cowsay("spaces                           inside")
-cowsay('Checkio rulezz')
-cowsay('A longtextwithonlyonespacetofittwolines.')
-cowsay(
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+# if __name__ == '__main__':
+#     # These "asserts" using only for self-checking and not necessary for auto-testing
+#     expected_cowsay_one_line = r'''
+#  ________________
+# < Checkio rulezz >
+#  ----------------
+#         \   ^__^
+#          \  (oo)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+# '''
+#     expected_cowsay_two_lines = r'''
+#  ________________________________________
+# / A                                      \
+# \ longtextwithonlyonespacetofittwolines. /
+#  ----------------------------------------
+#         \   ^__^
+#          \  (oo)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+# '''
+#
+#     expected_cowsay_many_lines = r'''
+#  _________________________________________
+# / Lorem ipsum dolor sit amet, consectetur \
+# | adipisicing elit, sed do eiusmod tempor |
+# | incididunt ut labore et dolore magna    |
+# \ aliqua.                                 /
+#  -----------------------------------------
+#         \   ^__^
+#          \  (oo)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+# '''
+#
+#     cowsay_one_line = cowsay('Checkio rulezz')
+#     assert cowsay_one_line == expected_cowsay_one_line, 'Wrong answer:\n%s' % cowsay_one_line
+#
+#     cowsay_two_lines = cowsay('A longtextwithonlyonespacetofittwolines.')
+#     assert cowsay_two_lines == expected_cowsay_two_lines, 'Wrong answer:\n%s' % cowsay_two_lines
+#
+#     cowsay_many_lines = cowsay('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do '
+#                                'eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+#     assert cowsay_many_lines == expected_cowsay_many_lines, 'Wrong answer:\n%s' % cowsay_many_lines
+#
+# cowsay(" a")
+# cowsay("mooooooooooooooooooooooooooooooooooooooo mooo")
+cowsay(" 0123456789012345678901234567890123456789 ")
