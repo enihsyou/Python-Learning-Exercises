@@ -81,54 +81,78 @@ def cowsay(says):
 '''.format(said = said, top = top, bottom = bottom)
 
 
-# if __name__ == '__main__':
-#     # These "asserts" using only for self-checking and not necessary for auto-testing
-#     expected_cowsay_one_line = r'''
-#  ________________
-# < Checkio rulezz >
-#  ----------------
-#         \   ^__^
-#          \  (oo)\_______
-#             (__)\       )\/\
-#                 ||----w |
-#                 ||     ||
-# '''
-#     expected_cowsay_two_lines = r'''
-#  ________________________________________
-# / A                                      \
-# \ longtextwithonlyonespacetofittwolines. /
-#  ----------------------------------------
-#         \   ^__^
-#          \  (oo)\_______
-#             (__)\       )\/\
-#                 ||----w |
-#                 ||     ||
-# '''
-#
-#     expected_cowsay_many_lines = r'''
-#  _________________________________________
-# / Lorem ipsum dolor sit amet, consectetur \
-# | adipisicing elit, sed do eiusmod tempor |
-# | incididunt ut labore et dolore magna    |
-# \ aliqua.                                 /
-#  -----------------------------------------
-#         \   ^__^
-#          \  (oo)\_______
-#             (__)\       )\/\
-#                 ||----w |
-#                 ||     ||
-# '''
-#
-#     cowsay_one_line = cowsay('Checkio rulezz')
-#     assert cowsay_one_line == expected_cowsay_one_line, 'Wrong answer:\n%s' % cowsay_one_line
-#
-#     cowsay_two_lines = cowsay('A longtextwithonlyonespacetofittwolines.')
-#     assert cowsay_two_lines == expected_cowsay_two_lines, 'Wrong answer:\n%s' % cowsay_two_lines
-#
-#     cowsay_many_lines = cowsay('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do '
-#                                'eiusmod tempor incididunt ut labore et dolore magna aliqua.')
-#     assert cowsay_many_lines == expected_cowsay_many_lines, 'Wrong answer:\n%s' % cowsay_many_lines
-#
-# cowsay(" a")
-# cowsay("mooooooooooooooooooooooooooooooooooooooo mooo")
+if __name__ == '__main__':
+    # These "asserts" using only for self-checking and not necessary for auto-testing
+    expected_cowsay_one_line = r'''
+ ________________
+< Checkio rulezz >
+ ----------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+'''
+    expected_cowsay_two_lines = r'''
+ ________________________________________
+/ A                                      \
+\ longtextwithonlyonespacetofittwolines. /
+ ----------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+'''
+
+    expected_cowsay_many_lines = r'''
+ _________________________________________
+/ Lorem ipsum dolor sit amet, consectetur \
+| adipisicing elit, sed do eiusmod tempor |
+| incididunt ut labore et dolore magna    |
+\ aliqua.                                 /
+ -----------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+'''
+
+    cowsay_one_line = cowsay('Checkio rulezz')
+    assert cowsay_one_line == expected_cowsay_one_line, 'Wrong answer:\n%s' % cowsay_one_line
+
+    cowsay_two_lines = cowsay('A longtextwithonlyonespacetofittwolines.')
+    assert cowsay_two_lines == expected_cowsay_two_lines, 'Wrong answer:\n%s' % cowsay_two_lines
+
+    cowsay_many_lines = cowsay('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do '
+                               'eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+    assert cowsay_many_lines == expected_cowsay_many_lines, 'Wrong answer:\n%s' % cowsay_many_lines
+
+cowsay(" a")
+cowsay("mooooooooooooooooooooooooooooooooooooooo mooo")
+
+COW = r'''
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+'''
+
+
+# def cowsay(s):
+#     s, l = [''] * (s[0] == ' ') + s.split() + [''] * (s[-1] == ' '), []
+#     while s:
+#         x = ''
+#         while s and len(x) + len(s[0]) < 40:
+#             x, s = x + s[0] + ' ', s[1:]
+#         if s and not x:
+#             x, s[0] = x + s[0][:39] + ' ', s[0][39:]
+#         l.append(x[:-1])
+#     n, m = len(l), max(map(len, l))
+#     f = n == 1 and ['< {} >'] or ['/ {} \\'] + ['| {} |'] * (n - 2) + ['\\ {} /']
+#     return '\n ' + '_' * (m + 2) + '\n' + '\n'.join(f[i].format(l[i].ljust(m)) for i in range(n)) + '\n ' + '-' * (
+#     m + 2) + COW
+
 cowsay(" 0123456789012345678901234567890123456789 ")
