@@ -5,7 +5,10 @@
 # a_factaral = lambda x: (x and x * a_factaral(x - 1)) + (x < 1 and 1)
 
 # 3rd a tricky way
-b = a_factaral = lambda x: (x and x * b(x - 1)) + (x < 1 and 1)
+# b = a_factaral = lambda x: (x and x * b(x - 1)) + (x < 1 and 1)
+
+# 4th improved
+b = a_factaral = lambda x: (x and x * b(x - 1) - 1) + 1
 print(a_factaral(2))
 print(a_factaral(10))
 print(a_factaral(5))
