@@ -28,8 +28,46 @@ import os
 
 import subprocess, shlex
 
-command_line = input()
-args = shlex.split(command_line)
-print(args)
-p = subprocess.Popen(args)
-print(p)
+#
+# command_line = input()
+# args = shlex.split(command_line)
+# print(args)
+# p = subprocess.Popen(args)
+# print(p)
+# subprocess.Popen('D:\Download\waifu2x-caffe\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\001.jpg -m noise --noise_level 2', shell = True, stdout = subprocess.PIPE).stdout.read()
+# os.system('D:\Download\waifu2x-caffe\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\001.jpg -m scale -s 0.5')
+# os.popen('D:\Download\waifu2x-caffe\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\001.jpg -m noise_scale --scale_ratio 1.6 --noise_level 2')
+# print(subprocess.Popen("D:\Download\waifu2x-caffe\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\001.jpg -m scale -s 0.5", shell = True, stdout = subprocess.PIPE).stdout.read())
+
+# print(subprocess.Popen(r"waifu2x-caffe-cui.exe -i 001.jpg", shell = True, stdout = subprocess.PIPE).stdout.read())
+# os.popen(r"D:\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\002.jpg")
+
+
+# subprocess.call('ls')
+# a = os.popen(r"D:\waifu2x-caffe\waifu2x-caffe-cui.exe -i D:\test\002.jpg")
+# print(a.read())
+
+
+
+# import os, sys
+#
+# # using command mkdir
+# a = 'mkdir nwdir'
+#
+# b = os.popen(a, 'r', 1)
+#
+# print(b)
+
+import ctypes
+drive = "D:\\"
+folder = "test"
+image = "001.jpg"
+image_path = os.path.join(drive, folder, image)
+print(image_path)
+SPI_SETDESKWALLPAPER = 20
+SPIF_UPDATEINIFILE = 0
+SystemParametersInfo = ctypes.windll.user32.SystemParametersInfoW
+r'D:\test\001.jpg'
+SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, image_path, SPIF_UPDATEINIFILE)
+
+
