@@ -125,7 +125,7 @@
 
 
 
-
+# 之前的做法 参考了一些做法。
 # import itertools
 #
 #
@@ -170,48 +170,84 @@
 #         pt = get_unvisited_pt()
 #     return max(groups, key = lambda g: g[0])
 
+# # 学习了Union-Find之后自己写的 .失败了
 # class ab():
 #     def __init__(self, data, size):
 #         self.size = size
 #         self.data = [data[i][j] for i in range(size) for j in range(size)]
-#         print(self.data)
-#         self.map = [-1 for _ in range(size * size)]
+#         # print(self.data)
+#         self.id = [i for i in range(size * size)]  # 数组对应位置的值即为组号
 #
-#     def find(self, x):
-#         # if self.map[x] > 0:
-#         #     x = self.map[x]
-#         #     self.find(x)
-#         while self.map[x] >= 0:
-#             x = self.map[x]
+#     def find(self, x):  # 查询节点属于的组
+#         while self.id[x] != x:
+#             x = self.id[x]
 #         return x
 #
-#     def catch(self, a, b):
-#         s1 = self.find(a)
-#         s2 = self.find(b)
-#         if s1 != s2:
-#             if self.map[s1] >= self.map[s2]:
-#                 self.map[s1] += self.map[s2]
-#                 self.map[s2] = s1
-#             else:
-#                 self.map[s2] += self.map[s1]
-#                 self.map[s1] = s2
-#             # for k in range(self.size):
-#             #     print(self.map[k:k+5])
-#             print(self.map, (s1, s2), "True")
+#     def connected(self, a, b):
+#         if self.data[a] == self.data[b]:
 #             return True
 #         return False
 #
+#     def union(self, a, b):
+#         if self.connected(a, b):
+#             s1 = self.find(a)
+#             s2 = self.find(b)
+#             if self.id[s1] > self.id[s2]:
+#                 self.id[a] = s2
+#             elif self.id[s1] == self.id[s2]:
+#                 self.id[b] = s1
+#                 self.id[a] = s1
+#             else:
+#                 self.id[b] = s1
+#             for i in range(self.size):
+#                 print(self.id[i * self.size:i * self.size + self.size])
+#             return True
+#         return False
 #
-# ac = ab([
-#     [1, 2, 3, 4, 5],
-#     [1, 1, 1, 2, 3],
-#     [1, 1, 1, 2, 2],
-#     [1, 2, 2, 2, 1],
-#     [1, 1, 1, 1, 1]]
-#     , 5)
-# for i in range(5 * 5):
-#     for j in range(5 * 5):
-#         ac.catch(i, j)
+#     def res(self):
+#         for i in range(self.size):
+#             print(self.id[i * self.size:i * self.size + self.size])
+#         ls = {}
+#         for u in self.id:
+#             if u in ls:
+#                 ls[u] += 1
+#             else:
+#                 ls[u] = 1
+#         a = max(ls.items(), key = lambda n: n[1])
+#         print(a)
+#         res = []
+#         b = False
+#         for i in range(self.size):
+#             for j in range(self.size):
+#                 if self.id[i * self.size + j] == a[0]:
+#                     res.append(a[1])
+#                     res.append(self.data[i * self.size + j])
+#                     b = True
+#                 if b: break
+#             if b: break
+#         print(res)
+#         return res
+#
+#
+# def checkio(data):
+#     size = len(data)
+#     cl = ab(data, len(data))
+#     direct = ((-size, 0), (0, -1), (size, 0), (0, 1))  # 上 左 下 右
+#     for i in range(0, size * size, size):  # 竖
+#         for j in range(size):  # 横
+#             for item in direct:  # x竖 y横
+#                 x = i + item[0]
+#                 y = j + item[1]
+#                 dis = i + j
+#                 dis2 = x + y
+#                 if 0 <= x < size * size and 0 <= y < size:
+#                     # print(dis, item)
+#                     cl.union(dis, dis2)
+#     return cl.res()
+#
+#
+# checkio([[4, 2, 5, 5, 1, 4], [4, 4, 5, 3, 4, 1], [2, 5, 4, 1, 5, 4], [1, 3, 1, 2, 2, 4], [5, 3, 4, 2, 5, 2],
+#          [4, 5, 5, 5, 5, 2]])
 # checkio([
 #     [1, 2, 3, 4, 5],
 #     [1, 1, 1, 2, 3],
