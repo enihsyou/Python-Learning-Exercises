@@ -122,68 +122,113 @@
 #             if data[i][j] == current:
 #
 #
-import itertools
 
 
-def group(data, start, visited):
-    def get(coor):
-        return data[coor[0]][coor[1]]
-
-    def in_data(coor):
-        n = len(data)
-        return 0 <= coor[0] < n and 0 <= coor[1] < n
-
-    stack = [start]
-    checked = visited + [start]
-    number = get(start)
-
-    pts = []
-    while stack:
-        pt = stack.pop()
-        pts.append(pt)
-        for d in ((0, -1), (0, 1), (-1, 0), (1, 0)):
-            new_pt = pt[0] + d[0], pt[1] + d[1]
-            if in_data(new_pt) and new_pt not in checked:
-                checked.append(new_pt)
-                if get(new_pt) == number:
-                    stack.append(new_pt)
-    return len(pts), number, pts
 
 
-def checkio(data):
-    def get_unvisited_pt():
-        all_pts = itertools.product(range(len(data)), repeat = 2)
-        unvisited = [p for p in all_pts if p not in visited]
-        return unvisited[0] if unvisited else None
+# import itertools
+#
+#
+# def group(data, start, visited):
+#     def get(coor):
+#         return data[coor[0]][coor[1]]
+#
+#     def in_data(coor):
+#         n = len(data)
+#         return 0 <= coor[0] < n and 0 <= coor[1] < n
+#
+#     stack = [start]
+#     checked = visited + [start]
+#     number = get(start)
+#
+#     pts = []
+#     while stack:
+#         pt = stack.pop()
+#         pts.append(pt)
+#         for d in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+#             new_pt = pt[0] + d[0], pt[1] + d[1]
+#             if in_data(new_pt) and new_pt not in checked:
+#                 checked.append(new_pt)
+#                 if get(new_pt) == number:
+#                     stack.append(new_pt)
+#     return len(pts), number, pts
+#
+#
+# def checkio(data):
+#     def get_unvisited_pt():
+#         all_pts = itertools.product(range(len(data)), repeat = 2)
+#         unvisited = [p for p in all_pts if p not in visited]
+#         return unvisited[0] if unvisited else None
+#
+#     pt = (0, 0)
+#     groups = []
+#     visited = []
+#     while pt is not None:
+#         size, number, pts = group(data, pt, visited)
+#         groups.append([size, number])
+#         visited += pts
+#         pt = get_unvisited_pt()
+#     return max(groups, key = lambda g: g[0])
 
-    pt = (0, 0)
-    groups = []
-    visited = []
-    while pt is not None:
-        size, number, pts = group(data, pt, visited)
-        groups.append([size, number])
-        visited += pts
-        pt = get_unvisited_pt()
-    return max(groups, key = lambda g: g[0])
-
-
-checkio([
-    [1, 2, 3, 4, 5],
-    [1, 1, 1, 2, 3],
-    [1, 1, 1, 2, 2],
-    [1, 2, 2, 2, 1],
-    [1, 1, 1, 1, 1]])
-checkio([
-    [2, 1, 2, 2, 2, 4],
-    [2, 5, 2, 2, 2, 2],
-    [2, 5, 4, 2, 2, 2],
-    [2, 5, 2, 2, 4, 2],
-    [2, 4, 2, 2, 2, 2],
-    [2, 2, 4, 4, 2, 2]])
-checkio([
-    [2, 1, 2, 2, 2, 4],
-    [2, 5, 3, 2, 2, 2],
-    [2, 5, 2, 1, 1, 2],
-    [2, 5, 2, 2, 2, 2],
-    [2, 4, 1, 1, 1, 2],
-    [2, 2, 4, 4, 2, 2]])
+# class ab():
+#     def __init__(self, data, size):
+#         self.size = size
+#         self.data = [data[i][j] for i in range(size) for j in range(size)]
+#         print(self.data)
+#         self.map = [-1 for _ in range(size * size)]
+#
+#     def find(self, x):
+#         # if self.map[x] > 0:
+#         #     x = self.map[x]
+#         #     self.find(x)
+#         while self.map[x] >= 0:
+#             x = self.map[x]
+#         return x
+#
+#     def catch(self, a, b):
+#         s1 = self.find(a)
+#         s2 = self.find(b)
+#         if s1 != s2:
+#             if self.map[s1] >= self.map[s2]:
+#                 self.map[s1] += self.map[s2]
+#                 self.map[s2] = s1
+#             else:
+#                 self.map[s2] += self.map[s1]
+#                 self.map[s1] = s2
+#             # for k in range(self.size):
+#             #     print(self.map[k:k+5])
+#             print(self.map, (s1, s2), "True")
+#             return True
+#         return False
+#
+#
+# ac = ab([
+#     [1, 2, 3, 4, 5],
+#     [1, 1, 1, 2, 3],
+#     [1, 1, 1, 2, 2],
+#     [1, 2, 2, 2, 1],
+#     [1, 1, 1, 1, 1]]
+#     , 5)
+# for i in range(5 * 5):
+#     for j in range(5 * 5):
+#         ac.catch(i, j)
+# checkio([
+#     [1, 2, 3, 4, 5],
+#     [1, 1, 1, 2, 3],
+#     [1, 1, 1, 2, 2],
+#     [1, 2, 2, 2, 1],
+#     [1, 1, 1, 1, 1]])
+# checkio([
+#     [2, 1, 2, 2, 2, 4],
+#     [2, 5, 2, 2, 2, 2],
+#     [2, 5, 4, 2, 2, 2],
+#     [2, 5, 2, 2, 4, 2],
+#     [2, 4, 2, 2, 2, 2],
+#     [2, 2, 4, 4, 2, 2]])
+# checkio([
+#     [2, 1, 2, 2, 2, 4],
+#     [2, 5, 3, 2, 2, 2],
+#     [2, 5, 2, 1, 1, 2],
+#     [2, 5, 2, 2, 2, 2],
+#     [2, 4, 1, 1, 1, 2],
+#     [2, 2, 4, 4, 2, 2]])
