@@ -68,7 +68,9 @@ def draw(data):
     for item in maps.values():
         if len(item) % 2 == 1:
             counts += 1
-        if counts > 2: return ()
+        if counts > 2:
+            print(())
+            return ()
 
     # End
     for item in maps.keys():
