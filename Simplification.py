@@ -52,7 +52,8 @@ class X:
 
     def __mul__(self, other):
         if isinstance(other, int):
-            self.power = list(map(lambda a: a * other, self.power))
+            self.power = [other * x for x in self.power]
+            # self.power = list(map(lambda a: a * other, self.power))
 
         elif isinstance(other, X):
             power = self.power
@@ -66,22 +67,25 @@ class X:
         return self
 
     def __radd__(self, other):
-        self.__add__(other)
-        return self
+        return self + other
 
     def __rsub__(self, other):
-        self.power = [-x for x in self.power]
-        if isinstance(other, int):
-            self.power[0] += other
-        elif isinstance(other, X):
-            for i in range(len(other.power)):
-                if i >= len(self.power): self.power.append(0)
-                self.power[i] += other.power[i]
-        # return self.__repr__()
-        return self
+        # self.power = [-x for x in self.power]
+        # if isinstance(other, int):
+        #     self.power[0] += other
+        # elif isinstance(other, X):
+        #     for i in range(len(other.power)):
+        #         if i >= len(self.power): self.power.append(0)
+        #         self.power[i] += other.power[i]
+        # # return self.__repr__()
+        # return self
+        return -self + other
 
     def __rmul__(self, other):
-        self.__mul__(other)
+        return self * other
+
+    def __neg__(self):
+        self.power = [-x for x in self.power]
         return self
 
     def __repr__(self):
@@ -197,7 +201,7 @@ class ExpressionEvaluator:
 def simplify(data):
     e = ExpressionEvaluator()
     print(data, e.parse(data))
-    print(e.parse(data))
+    # print(e.parse(data))
     return e.parse(data)
 
 
