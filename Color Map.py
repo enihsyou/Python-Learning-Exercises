@@ -1,50 +1,86 @@
 import itertools
 
 
-def search(data, coor, index, rows, columns, colors, unexplored):
+def find(data, coor, index, unexplored, numbers):
     x, y = coor
-    if coor in unexplored:
-        if data[x][y] == index:
-            unexplored.remove(coor)
-            for n, m in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-                if rows > x + n >= 0 and columns > y + m >= 0:
-                    search(data, (x + n, y + m), index, rows, columns, colors, unexplored)
+
     if data[x][y] != index:
-        color2 = colors[data[x][y]]
-        if color2 in colors[index] and isinstance(color2, int):
-            colors[index].remove(color2)
-    return colors[index]
+        numbers[index].add(data[x][y])
+    elif coor in unexplored:
+        unexplored.remove(coor)
+        for n, m in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            if len(data) > x + n >= 0 and len(data[0]) > y + m >= 0:
+                find(data, (x + n, y + m), index, unexplored, numbers)
 
 
-def color_map(region):
-    rows = len(region)
-    columns = len(region[0])
-    unexplored = set(itertools.product(range(rows), range(columns)))  # 记录没有到过的点
-    numbers = {k: [0, 1, 2, 3] for k in set(j for i in region for j in i)}  # 数据所拥有的数字种类
+def color_map(data):  # 寻找相邻相同数字的方式
+    rows = len(data)
+    columns = len(data[0])
+    numbers = {k: set() for k in set(j for i in data for j in i)}
+    unexplored = set(itertools.product(range(rows), range(columns)))
     index_p = []
-    for index1, item1 in enumerate(region):
+    for index1, item1 in enumerate(data):
         for index2, item2 in enumerate(item1):
-            # if maps[index1][index2] < 0: continue
-            # if region[index1][index2] != index and region[index1][index2] not in index_p:
-            if region[index1][index2] not in index_p:
-                index = region[index1][index2]  # 当前主循环格子的数字值
-                index_p.append(index)
-            else:
-                continue
-            # unexplored.remove((index1, index2))
-            numbers[index] = search(region, (index1, index2), index, rows, columns, numbers, unexplored)[0]
-            print(numbers[index])
-            print([(x, numbers[x] + 1) for x in numbers if numbers[x] != [0, 1, 2, 3]])
-            print([(x, numbers[x]) for x in numbers])
-            print()
-    print([numbers[x] + 1 for x in numbers])
-    return [numbers[x] + 1 for x in numbers]
+            # if data[index1][index2] not in index_p:  # 这里需要改进 提升效率
+            index = data[index1][index2]  # 当前主循环格子的数字值
+            index_p.append(index)
+            # else:
+            #     continue
+            find(data, (index1, index2), index, unexplored, numbers)
+    colors = {n: {1, 2, 3, 4} for n in index_p}
+    for item in numbers:
+        colors[item] = colors[item].pop()
+        for index in numbers[item]:
+            if isinstance(colors[index], set):
+                colors[index] -= {colors[item], }
+    print(colors.values())
+    return [colors[x] for x in colors]
+
+
+# def search(data, coor, index, rows, columns, colors, unexplored):
+#     x, y = coor
+#     if coor in unexplored:
+#         if data[x][y] == index:
+#             unexplored.remove(coor)
+#             for n, m in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+#                 if rows > x + n >= 0 and columns > y + m >= 0:
+#                     search(data, (x + n, y + m), index, rows, columns, colors, unexplored)
+#     if data[x][y] != index:
+#         color2 = colors[data[x][y]]
+#         if color2 in colors[index] and isinstance(color2, int):
+#             colors[index].remove(color2)
+#     return colors[index]
+#
+#
+# def color_map(region):  # 寻找相邻块的方式(有BUG)
+#     rows = len(region)
+#     columns = len(region[0])
+#     unexplored = set(itertools.product(range(rows), range(columns)))  # 记录没有到过的点
+#     numbers = {k: [0, 1, 2, 3] for k in set(j for i in region for j in i)}  # 数据所拥有的数字种类
+#     index_p = []
+#     for index1, item1 in enumerate(region):
+#         for index2, item2 in enumerate(item1):
+#             # if maps[index1][index2] < 0: continue
+#             # if region[index1][index2] != index and region[index1][index2] not in index_p:
+#             if region[index1][index2] not in index_p:
+#                 index = region[index1][index2]  # 当前主循环格子的数字值
+#                 index_p.append(index)
+#             else:
+#                 continue
+#             # unexplored.remove((index1, index2))
+#             numbers[index] = search(region, (index1, index2), index, rows, columns, numbers, unexplored)[0]
+#             print(numbers[index])
+#             print([(x, numbers[x] + 1) for x in numbers if numbers[x] != [0, 1, 2, 3]])
+#             print([(x, numbers[x]) for x in numbers])
+#             print()
+#     print([numbers[x] + 1 for x in numbers])
+#     return [numbers[x] + 1 for x in numbers]
 
 
 # color_map(((7, 4, 4, 4,), (7, 0, 1, 5,), (7, 2, 3, 5,), (6, 6, 6, 5,),))
-# color_map(((11, 0, 0, 0, 0, 0, 7, 0,), (0, 0, 0, 0, 0, 0, 7, 0,), (0, 0, 4, 4, 4, 0, 7, 0,), (0, 0, 0, 0, 0, 0, 0, 0,),
-#            (0, 0, 1, 0, 1, 0, 0, 0,), (5, 5, 1, 2, 1, 6, 6, 0,), (0, 0, 1, 0, 1, 0, 0, 0,), (0, 0, 0, 0, 0, 0, 0, 0,),
-#            (0, 0, 3, 3, 3, 0, 8, 0,), (0, 0, 10, 10, 9, 0, 8, 0,), (0, 0, 0, 10, 9, 9, 8, 0,),))
+color_map(((11, 0, 0, 0, 0, 0, 7, 0,), (0, 0, 0, 0, 0, 0, 7, 0,), (0, 0, 4, 4, 4, 0, 7, 0,), (0, 0, 0, 0, 0, 0, 0, 0,),
+           (0, 0, 1, 0, 1, 0, 0, 0,), (5, 5, 1, 2, 1, 6, 6, 0,), (0, 0, 1, 0, 1, 0, 0, 0,), (0, 0, 0, 0, 0, 0, 0, 0,),
+           (0, 0, 3, 3, 3, 0, 8, 0,), (0, 0, 10, 10, 9, 0, 8, 0,), (0, 0, 0, 10, 9, 9, 8, 0,),))
 
 print()
 if __name__ == '__main__':
