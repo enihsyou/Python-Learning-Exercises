@@ -19,13 +19,16 @@ def color_map(data):  # 寻找相邻相同数字的方式
     numbers = {k: set() for k in set(j for i in data for j in i)}
     unexplored = set(itertools.product(range(rows), range(columns)))
     index_p = []
+    last_index = -1  # 为了加快运算速度
     for index1, item1 in enumerate(data):
         for index2, item2 in enumerate(item1):
             # if data[index1][index2] not in index_p:  # 这里需要改进 提升效率
-            index = data[index1][index2]  # 当前主循环格子的数字值
-            index_p.append(index)
-            # else:
-            #     continue
+            if data[index1][index2] != last_index:  # 改进版本
+                index = data[index1][index2]  # 当前主循环格子的数字值
+                last_index = index
+                index_p.append(index)
+            else:
+                continue
             find(data, (index1, index2), index, unexplored, numbers)
     colors = {n: {1, 2, 3, 4} for n in index_p}
     for item in numbers:
