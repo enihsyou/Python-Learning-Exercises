@@ -36,7 +36,7 @@ def color_map(data):  # 寻找相邻相同数字的方式
     print(colors.values())
     return [colors[x] for x in colors]
 
-
+#
 # def search(data, coor, index, rows, columns, colors, unexplored):
 #     x, y = coor
 #     if coor in unexplored:
@@ -60,8 +60,6 @@ def color_map(data):  # 寻找相邻相同数字的方式
 #     index_p = []
 #     for index1, item1 in enumerate(region):
 #         for index2, item2 in enumerate(item1):
-#             # if maps[index1][index2] < 0: continue
-#             # if region[index1][index2] != index and region[index1][index2] not in index_p:
 #             if region[index1][index2] not in index_p:
 #                 index = region[index1][index2]  # 当前主循环格子的数字值
 #                 index_p.append(index)
