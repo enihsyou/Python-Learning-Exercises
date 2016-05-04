@@ -1,3 +1,11 @@
+"""
+File name: Boolean Algebra
+Reference: https://checkio.org/mission/boolean-algebra/
+Time: ${YEAR}-${MONTH}-${DAY}
+By: enihsyou
+"""
+
+
 def boolean(x, y, operation):
     func = {
         "conjunction": lambda a, b: a & b,
