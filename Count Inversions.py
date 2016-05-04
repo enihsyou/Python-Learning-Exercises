@@ -10,7 +10,8 @@ def count_inversion(sequence):
     """
         Count inversions in a sequence of numbers
     """
-    return [1 if a > b else 0 for i, a in enumerate(sequence) for b in sequence[i:]].count(1)
+    # return [1 if a > b else 0 for i, a in enumerate(sequence) for b in sequence[i:]].count(1)
+    return [1 if a > b else 0 for i, a in enumerate(sequence) for b in sequence[i + 1:]].count(1)
 
 
 if __name__ == '__main__':
