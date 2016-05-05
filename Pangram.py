@@ -7,7 +7,8 @@ By: enihsyou
 
 
 def check_pangram(text):
-    return False if {chr(i) for i in range(97, 123)}.difference(set(text.lower())) else True
+    # return False if {chr(i) for i in range(97, 123)}.difference(set(text.lower())) else True
+    return not any({chr(i) for i in range(97, 123)}.difference(set(text.lower())))
 
 
 if __name__ == '__main__':
