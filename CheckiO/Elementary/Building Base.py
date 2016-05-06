@@ -8,19 +8,26 @@ By: enihsyou
 
 class Building:
     def __init__(self, south, west, width_WE, width_NS, height = 10):
-        raise NotImplementedError
+        self.south = south
+        self.west = west
+        self.width_WE = width_WE
+        self.width_NS = width_NS
+        self.height = height
 
     def corners(self):
-        raise NotImplementedError
+        return {"north-west": [self.south + self.width_NS, self.west],
+                "north-east": [self.south + self.width_NS, self.west + self.width_WE],
+                "south-west": [self.south, self.west],
+                "south-east": [self.south, self.west + self.width_WE]}
 
     def area(self):
-        raise NotImplementedError
+        return self.width_NS * self.width_WE
 
     def volume(self):
-        raise NotImplementedError
+        return self.width_NS * self.width_WE * self.height
 
     def __repr__(self):
-        raise NotImplementedError
+        return "Building({}, {}, {}, {}, {})".format(self.south, self.west, self.width_WE, self.width_NS, self.height)
 
 
 if __name__ == '__main__':
