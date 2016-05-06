@@ -74,26 +74,27 @@ from fractions import Fraction
 def checkio(alloys):
     return 1 - sum([1 - v if 'gold' in k else v for (k, v) in alloys.items()]) / 2
 
+
 checkio({
-    'tin-copper': Fraction(5, 9),
-    'gold-tin': Fraction(1, 2),
+    'tin-copper' : Fraction(5, 9),
+    'gold-tin'   : Fraction(1, 2),
     'copper-gold': Fraction(2, 7),
 })
 
 checkio({
-    'tin-iron': Fraction(2, 3),
-    'gold-iron': Fraction(1, 2),
+    'tin-iron'   : Fraction(2, 3),
+    'gold-iron'  : Fraction(1, 2),
     'copper-iron': Fraction(1, 4),
 })
 
 checkio({
-    'tin-iron': Fraction(1, 2),
+    'tin-iron'   : Fraction(1, 2),
     'iron-copper': Fraction(1, 2),
-    'copper-tin': Fraction(1, 2),
+    'copper-tin' : Fraction(1, 2),
 })
 
 checkio({
-    'gold-tin': Fraction(1, 2),
-    'gold-iron': Fraction(1, 3),
+    'gold-tin'   : Fraction(1, 2),
+    'gold-iron'  : Fraction(1, 3),
     'gold-copper': Fraction(1, 4),
 })

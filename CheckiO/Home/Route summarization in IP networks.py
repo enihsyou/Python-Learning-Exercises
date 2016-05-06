@@ -78,6 +78,7 @@
 def checkio(data):
     routes = [''.join([bin(int(x))[2:].zfill(8) for x in i.split('.')]) for i in data]
     new_route = ''
+    d = 0
     for i in range(32):
         for j in range(len(routes) - 1):
             if routes[0][i] == routes[j + 1][i]:
@@ -92,7 +93,6 @@ def checkio(data):
                 )
         new_route += d
         d = ''
-
 
 
 checkio(["172.16.12.0", "172.16.13.0", "172.155.43.9"])

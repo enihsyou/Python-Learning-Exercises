@@ -8,4 +8,6 @@ def weak_point(matrix):
     row_sums = list(map(sum, matrix))
     column_sums = list(map(sum, list(zip(*matrix))))
     return row_sums.index(min(row_sums)), column_sums.index(min(column_sums))
+
+
 weak_point([[1, 1, 1], [1, 1, 1], [1, 1, 1]])

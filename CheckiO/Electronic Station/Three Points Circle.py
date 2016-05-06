@@ -1,4 +1,6 @@
 import math
+
+
 # from re import sub as s
 
 
@@ -22,6 +24,7 @@ def checkio(input):
     r = math.sqrt((A[0] - x) ** 2 + (A[1] - y) ** 2)
     print("(x{x:+g})^2+(y{y:+g})^2={r:g}^2".format(x = round(-x, 2), y = round(-y, 2),
                                                    r = round(r, 2)))
+
 
 checkio("(3,7),(6,9),(9,7)")
 checkio("(2,2),(6,2),(2,6)")

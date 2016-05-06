@@ -57,5 +57,4 @@ def checkio(data):
     return result
 
 
-chec
-kio(3275)
+checkio(3275)

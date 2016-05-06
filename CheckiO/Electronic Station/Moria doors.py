@@ -50,7 +50,7 @@ def find_word(messages):
     print(likeness_sum.index(max(likeness_sum)))
     print(message[likeness_sum.index(max(likeness_sum))])
     return message[likeness_sum.index(max(likeness_sum))]
-    #print(max(likeness, key = sum(likeness[i] for i in range(len(likeness)))))
+    # print(max(likeness, key = sum(likeness[i] for i in range(len(likeness)))))
 
 
 find_word(u"Beard and Bread")

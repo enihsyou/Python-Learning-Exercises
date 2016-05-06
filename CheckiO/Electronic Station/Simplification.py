@@ -1,5 +1,5 @@
-import re
 import collections
+import re
 
 X = r'(?P<X>x)'
 NUM = r'(?P<NUM>\d+)'
@@ -41,6 +41,10 @@ class X:
         return self
 
     def __sub__(self, other):
+        """
+
+        :type other: X
+        """
         if isinstance(other, int):
             self.power[0] -= other
         elif isinstance(other, X):

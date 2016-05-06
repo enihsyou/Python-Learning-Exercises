@@ -58,8 +58,6 @@ def checkio(data):
     return check(hor) or check(ver) or check(sub) or check(main)
 
 
-
-
 # def checkio(matrix, l = 3):
 #     q = range(len(matrix))
 #     ls = lambda x: len(set(x))

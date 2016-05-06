@@ -11,8 +11,8 @@ def boolean(x, y, operation):
         "conjunction": lambda a, b: a & b,
         "disjunction": lambda a, b: a | b,
         "implication": lambda a, b: (not a) | b,
-        "exclusive": lambda a, b: a ^ b,
-        "equivalence": lambda a, b: not(a ^ b)
+        "exclusive"  : lambda a, b: a ^ b,
+        "equivalence": lambda a, b: not (a ^ b)
     }
     return func[operation](x, y)
 

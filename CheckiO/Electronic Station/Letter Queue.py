@@ -3,14 +3,15 @@ def letter_queue(data):
     for func in data:
         fu.append(func.split())
     dic = {"PUSH": lambda x, y: x.append(y),
-           "POP": lambda x, y: x.pop(y)}
+           "POP" : lambda x, y: x.pop(y)}
     queue = []
     for item in fu:
         if len(item) == 2:
             dic[item[0]](queue, item[1])
         elif queue:
             dic[item[0]](queue, 0)
-        else: continue
+        else:
+            continue
     return "".join(queue)
 
 

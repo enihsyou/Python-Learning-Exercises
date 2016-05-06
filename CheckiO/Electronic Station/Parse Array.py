@@ -161,4 +161,3 @@ if __name__ == "__main__":
         assert False, "Here should be only one array."
     except ValueError:
         pass
-

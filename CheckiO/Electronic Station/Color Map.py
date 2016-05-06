@@ -39,6 +39,7 @@ def color_map(data):  # 寻找相邻相同数字的方式
     print(colors.values())
     return [colors[x] for x in colors]
 
+
 #
 # def search(data, coor, index, rows, columns, colors, unexplored):
 #     x, y = coor
