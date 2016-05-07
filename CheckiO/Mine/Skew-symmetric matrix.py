@@ -7,8 +7,9 @@ By: enihsyou
 
 
 def checkio(matrix):
-    return all([[matrix[j][i] for j in range(len(matrix))] == list(map(lambda x: -x, matrix[i])) for i in
-                range(len(matrix))])
+    # return all([[matrix[j][i] for j in range(len(matrix))] == list(map(lambda x: -x, matrix[i])) for i in
+    #             range(len(matrix))])
+    return all(list(zip(*matrix))[i] == tuple(map(lambda x: -x, matrix[i])) for i in range(len(matrix)))
 
 
 # These "asserts" using only for self-checking and not necessary for auto-testing
