@@ -11,13 +11,17 @@ def checkio(pattern, image):
     b = len(image[0])
     c = len(pattern)
     d = len(pattern[0])
+    jumped = 0  # 跳过次数
     for i in range(a - c + 1):
         find_col = 0
         for j in range(b - d + 1):
             if find_col:
                 find_col -= 1
+                jumped += 1
                 continue
-            if image[i][j] - 1 > 0: continue  # 跳过已经处理过的块
+            if image[i][j] - 1 > 0:
+                jumped += 1
+                continue  # 跳过已经处理过的块
             if pattern == [image[q][j:j + d] for q in range(i, i + c)]:
                 find_col = d - 1
                 for k in range(i, i + c):
@@ -29,6 +33,7 @@ def checkio(pattern, image):
     # for k in range(a):
     #         print(image[k])
     # print('---')
+    print('跳过:', jumped)
     return image
 
 
