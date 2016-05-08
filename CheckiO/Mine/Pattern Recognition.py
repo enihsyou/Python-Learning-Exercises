@@ -17,6 +17,7 @@ def checkio(pattern, image):
             if find_col:
                 find_col -= 1
                 continue
+            if image[i][j] - 1 > 0: continue  # 跳过已经处理过的块
             if pattern == [image[q][j:j + d] for q in range(i, i + c)]:
                 find_col = d - 1
                 for k in range(i, i + c):
