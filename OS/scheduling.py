@@ -189,17 +189,17 @@ def main():
     # 选择函数
     func, use_priority = choose_function()
     # 输入时间片大小
-    # round_times = input_round()
-    round_times = 2
+    round_times = input_round()
+    # round_times = 2
     # 输入列表项目
-    # queues = input_name_and_service_time(round_times)
-    queues = [
-        QueueObject(round_times, "a1", remain=3),
-        QueueObject(round_times, "a2", remain=2),
-        QueueObject(round_times, "a3", remain=4),
-        QueueObject(round_times, "a4", remain=2),
-        QueueObject(round_times, "a5", remain=1),
-    ]
+    queues = input_name_and_service_time(round_times)
+    # queues = [
+    #     QueueObject(round_times, "a1", remain=3),
+    #     QueueObject(round_times, "a2", remain=2),
+    #     QueueObject(round_times, "a3", remain=4),
+    #     QueueObject(round_times, "a4", remain=2),
+    #     QueueObject(round_times, "a5", remain=1),
+    # ]
 
     # 如果所有对象都没有完成，就继续循环
     break_flag = False
