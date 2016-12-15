@@ -3,8 +3,8 @@ class Memory:
     """内存模拟"""
 
     def __init__(self, size):
-        self.size = size
-        self.free = [Range(size)]
+        self.size = size - 1
+        self.free = [Range(self.size)]
 
     def merge(self):
         if len(self.free) <= 1: return
@@ -52,7 +52,7 @@ class Range:
 
     def allocate(self, size):
         """分配空间"""
-        assert self.stop - size >= self.start
+        assert self.stop - size + 1 >= self.start
         self.stop -= size
 
     def release(self, address, size):
@@ -69,22 +69,26 @@ class Range:
 
 
 def perform_best_fit_algorithm(memory, action, *args):
-    def _print_memory():
+    def _print_memory(memory):
         print_format(sorted(memory.free, key=lambda x: x.size))
 
     def assign(allocated, size):
         """给allocated数组内的Range 分配空间"""
         for space in allocated:
             if space.size >= size:  # 如果大小满足
-                space.allocate(size)
+                if space.size > size:
+                    space.allocate(size)
+                    memory.free = allocated
+                elif space.size == size:
+                    memory.free.remove(space)
                 memory.merge()
                 # 空间从小到大打印
-                _print_memory()
+                _print_memory(memory)
                 print("Succeed")
                 print("Address=%d\n" % (space.stop + 1))
                 return True
         # 失败了
-        _print_memory()
+        _print_memory(memory)
         print("Failed")
         print("Too large size\n")
         return False
@@ -98,9 +102,10 @@ def perform_best_fit_algorithm(memory, action, *args):
                 for space in memory.free):
             memory.free.append(may_be_new)
             memory.merge()
-            _print_memory()
+            _print_memory(memory)
             print("Succeed")
             return True
+        _print_memory(memory)
         print("Failed")
         return False
 
@@ -112,22 +117,26 @@ def perform_best_fit_algorithm(memory, action, *args):
 
 
 def perform_first_fit_algorithm(memory, action, *args):
-    def _print_memory():
+    def _print_memory(memory):
         print_format(sorted(memory.free, key=lambda x: x.start))
 
     def assign(allocated, size):
         """给allocated数组内的Range 分配空间"""
         for space in allocated:
             if space.size >= size:  # 如果大小满足
-                space.allocate(size)
+                if space.size > size:
+                    space.allocate(size)
+                    memory.free = allocated
+                elif space.size == size:
+                    memory.free.remove(space)
                 memory.merge()
                 # 空间按照起始地址打印
-                _print_memory()
+                _print_memory(memory)
                 print("Succeed")
                 print("Address=%d\n" % (space.stop + 1))
                 return True
         # 失败了
-        _print_memory()
+        _print_memory(memory)
         print("Failed")
         print("Too large size\n")
         return False
@@ -141,9 +150,10 @@ def perform_first_fit_algorithm(memory, action, *args):
                 for space in memory.free):
             memory.free.append(may_be_new)
             memory.merge()
-            _print_memory()
+            _print_memory(memory)
             print("Succeed")
             return True
+        _print_memory(memory)
         print("Failed")
         return False
 
@@ -155,7 +165,7 @@ def perform_first_fit_algorithm(memory, action, *args):
 
 
 def input_memory_size():
-    input_string = input("Please input memory size:\n")
+    input_string = input("Please input memory size (B):\n")
     while 1:
         try:
             round_input = int(input_string)
@@ -169,30 +179,30 @@ def input_memory_size():
 
 
 def choose_function():
-    func = perform_best_fit_algorithm
-
     while True:
         choice = input("1. Best-fit Algorithm\n"
                        "2. First-fit Algorithm\n")
         if choice == "1" or choice == "2":
             break
-    if choice == 1:
+    if choice == "1":
         func = perform_best_fit_algorithm
         print("{:-^80}".format("Best-fit Algorithm"))
-    if choice == 2:
+        return func
+
+    if choice == "2":
         func = perform_first_fit_algorithm
         print(
             "{:-^80}".format("First-fit Algorithm"))
+        return func
 
-    return func
 
-
-def choose_action():
+def choose_action(max_size):
     def _input_size():
         while True:
             try:
                 size = int(input("Input size:\n"))
-            except ValueError:
+                assert max_size >= size > 0
+            except (ValueError, AssertionError):
                 pass
             else:
                 return size
@@ -201,7 +211,8 @@ def choose_action():
         while True:
             try:
                 address = int(input("Input address:\n"))
-            except ValueError:
+                assert max_size >= address >= 0
+            except (ValueError, AssertionError):
                 pass
             else:
                 return address
@@ -228,19 +239,20 @@ def choose_action():
 
 def print_format(memory_space):
     print("{:<8s}{:<8s}{:<8s}{:<8s}".format("Index", "Start", "Stop", "Size"))
+    if len(memory_space) < 1: return
     for i, item in enumerate(memory_space, 1):
         print("{:<8d}{o.start:<8}{o.stop:<8}{o.size:<8}".format(i, o=item))
 
 
 def main():
-    func = choose_function()
     memory_size = input_memory_size()
-    memory = Memory(memory_size)
-    # memory = Memory(32766)
+    func = choose_function()
+    # memory = Memory(memory_size)
+    memory = Memory(32768)
     # memory.free = [Range(3000, 5766), Range(0, 2766), Range(6000, 7000)]
     print_format(memory.free)
     while True:
-        action, args = choose_action()
+        action, args = choose_action(memory_size)
         func(memory, action, *args)
 
 
