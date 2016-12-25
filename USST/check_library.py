@@ -24,7 +24,7 @@ def send_mail(text):
         print("Error: 无法发送邮件")
 
 
-def check_book(search_id, last_status, offset=2):
+def check_book(search_id, offset=2):
     response = requests.get(
         "http://opac.usst.edu.cn:8080/opac/item.php",
         params={"marc_no": search_id})
@@ -37,11 +37,11 @@ def check_book(search_id, last_status, offset=2):
         book_id = book[0].text
         book_status = book[4].text
         s = " ".join([book_name, book_id, book_status])
-        if book_status == last_status.pop(0):
-            print(s)
-        else:
+        print(s)
+        if book_status == "可借":
             send_mail(s)
 
 
-check_book("0000506934", ["借出-应还日期：2017-03-07"])
-check_book("0000373998", ["借出-应还日期：2017-03-07", "借出-应还日期：2017-03-07"])
+check_book("0000506934")
+check_book("0000373998")
+check_book("0000501786")
