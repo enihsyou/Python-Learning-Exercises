@@ -4,7 +4,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, FeatureNotFound
 
 SMTP_host = "192.168.1.103"
 server = smtplib.SMTP(host=SMTP_host)
@@ -28,7 +28,11 @@ def check_book(search_id, offset=2):
     response = requests.get(
         "http://opac.usst.edu.cn:8080/opac/item.php",
         params={"marc_no": search_id})
-    soup = BeautifulSoup(response.content, "lxml")
+    try:
+        soup = BeautifulSoup(response.content, "lxml")
+    except FeatureNotFound:
+        soup = BeautifulSoup(response.content, "html.parser")
+
     book_name = soup.select("#item_detail > dl:nth-of-type(1) > dd > a")[0].text
 
     books = soup.select("#item > tr")
@@ -44,4 +48,3 @@ def check_book(search_id, offset=2):
 
 check_book("0000506934")
 check_book("0000373998")
-check_book("0000501786")
