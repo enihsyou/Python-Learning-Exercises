@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+a = {i: i ** 2 for i in range(10)}
+print(dir(dict))
+items = a.items()
+values = a.values()
+keys = a.keys()
+b = a.copy()
+a_get = a.get(3)
+a_pop = a.pop(9)
+a_pop2 = a.popitem()
+a.setdefault(10, 100)
+a.update({20: 400})
+a.clear()
+a = a.fromkeys([2, 3, 4], 0)
+dict.mro()
+print(a)
